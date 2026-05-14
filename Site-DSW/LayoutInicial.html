@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de academia</title>
+    <link rel="stylesheet" href="EstiloInicial.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+ <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-dumbbell"> <img src="Logo.png" alt=""></i> 
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Serviços</a></li>
+                <li><a href="#plans">Planos</a></li>
+                <li><a href="#testimonials">Depoimentos</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Transforme Seu Corpo</h1>
+            <p>Alcance seus objetivos de fitness com os melhores treinadores e equipamentos de ponta. Sua transformação começa aqui!</p>
+            <a href="#plans" class="cta-button">Começar Agora</a>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>O Que Oferecemos</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3>Musculação</h3>
+                    <p>Equipamentos modernos e treinadores qualificados para maximizar seus ganhos musculares.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Cardio</h3>
+                    <p>Esteiras, bikes e elípticos de última geração para queimar calorias e melhorar sua resistência.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Aulas em Grupo</h3>
+                    <p>Zumba, crossfit, pilates e muito mais. Treine com energia e motivação em grupo!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-swimmer"></i>
+                    </div>
+                    <h3>Piscina</h3>
+                    <p>Hidroginástica e natação para um treino completo e recuperação muscular.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans -->
+    <section id="plans">
+        <div class="container">
+            <h2>Nossos Planos</h2>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h3>Básico</h3>
+                    <div class="plan-price">R$ 79<span>/mês</span></div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• Acesso livre</li>
+                        <li>• Musculação</li>
+                        <li>• Cardio</li>
+                        <li>• Aulas em grupo</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="margin-top: 1.5rem; display: inline-block;">Contratar</a>
+                </div>
+                <div class="plan-card featured">
+                    <h3>Premium <span style="background: #ff6b35; color: white; padding: 0.2rem 0.5rem; border-radius: 20px; font-size: 0.8rem;">Mais Popular</span></h3>
+                    <div class="plan-price">R$ 129<span>/mês</span></div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• Tudo do Básico</li>
+                        <li>• Aulas em grupo ilimitadas</li>
+                        <li>• Piscina</li>
+                        <li>• 1 consulta nutricionista</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="margin-top: 1.5rem; display: inline-block;">Contratar</a>
+                </div>
+                <div class="plan-card">
+                    <h3>VIP</h3>
+                    <div class="plan-price">R$ 199<span>/mês</span></div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• Tudo do Premium</li>
+                        <li>• Treino personalizado</li>
+                        <li>• Sauna</li>
+                        <li>• Estacionamento</li>
+                    </ul>
+                    <a href="#" class="cta-button" style="margin-top: 1.5rem; display: inline-block;">Contratar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 26, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #333 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>    
+    <section id="testimonials" class="testimonial">
+        <div class="container">
+            <h2 style="color: white;">O Que Nossos Alunos Dizem</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="João" class="testimonial-avatar">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"Melhor academia da cidade! Professores incríveis!"</p>
+                    <strong>- João Silva</strong>
+                </div>
+                <div class="testimonial-card">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Maria" class="testimonial-avatar">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"Perdi 15kg em 6 meses! Recomendo!"</p>
+                    <strong>- Maria Santos</strong>
+                </div>
+                <div class="testimonial-card">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt="Carlos" class="testimonial-avatar">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"Resultados garantidos! Melhor escolha!"</p>
+                    <strong>- Carlos Oliveira</strong>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <h3 class="comments-title">Compartilhe sua Experiência <i class="fas fa-camera"></i></h3>
+                
+                <form class="comment-form" id="commentForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nome:</label>
+                            <input type="text" id="commentName" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-star"></i> Nota:</label>
+                            <select id="commentRating" required>
+                                <option value="">Escolha sua nota</option>
+                                <option value="1"> 1 Estrela</option>
+                                <option value="2"> 2 Estrelas</option>
+                                <option value="3"> 3 Estrelas</option>
+                                <option value="4"> 4 Estrelas</option>
+                                <option value="5"> 5 Estrelas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-image"></i> Foto (opcional):</label>
+                            <input type="file" id="commentImage" accept="image/*">
+                            <small style="color: rgba(255,255,255,0.7);">Máx 2MB - JPG, PNG</small>
+                            <img id="imagePreview" class="image-preview" style="display: none;">
+                        </div>
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-comment"></i> Comentário:</label>
+                            <textarea id="commentText" rows="3" placeholder="O que achou da academia? Conte sua história..." required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="cta-button">
+                        <i class="fas fa-paper-plane"></i> Publicar
+                    </button>
+                </form>
+
+                <div class="comments-list" id="commentsList">
+                    <div style="text-align: center; color: rgba(255,255,255,0.5); padding: 2rem;">
+                        <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                        Seja o primeiro a comentar!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <p>Av. Principal, 123 - Centro<br>Tel: (11) 99999-9999<br>WhatsApp: (11) 98888-8888</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+            <p>&copy; 2024 Gaviões Academia. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href'))?.scrollIntoView({behavior: 'smooth', block: 'start'});
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 26, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #333 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        const commentForm = document.getElementById('commentForm');
+        const commentsList = document.getElementById('commentsList');
+        const commentImageInput = document.getElementById('commentImage');
+        const imagePreview = document.getElementById('imagePreview');
+
+        commentImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file && file.size > 2 * 1024 * 1024) {
+                alert('❌ Imagem muito grande! Máximo 2MB.');
+                this.value = '';
+                return;
+            }
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem('academiaComments')) || [];
+            displayComments(comments);
+        }
+
+        function displayComments(comments) {
+            if (comments.length === 0) {
+                commentsList.innerHTML = `
+                    <div style="text-align: center; color: rgba(255,255,255,0.5); padding: 2rem;">
+                        <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                        Seja o primeiro a comentar!
+                    </div>
+                `;
+                return;
+            }
+
+            commentsList.innerHTML = '';
+            comments.forEach((comment, index) => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment-item';
+                commentDiv.innerHTML = `
+                    <div style="min-width: 70px;">
+                        ${comment.image ? 
+                            `<img src="${comment.image}" alt="${comment.name}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:3px solid #ff6b35;" onerror="this.outerHTML='<div style=\\'width:60px;height:60px;border-radius:50%;background:linear-gradient(45deg,#ff6b35,#f7931e);display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:1.2rem;margin-right:1rem\\'>I</div>'">` :
+                            `<div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(45deg,#ff6b35,#f7931e);display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:1.2rem;">I</div>`
+                        }
+                    </div>
+                    <div style="flex:1;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                            <div style="font-weight:bold;color:#ff6b35;font-size:1.1rem;">${comment.name}</div>
+                            <div style="display:flex;gap:0.2rem;color:#ff6b35;">${'⭐'.repeat(comment.rating)}</div>
+                        </div>
+                        <div style="font-size:0.85rem;color:rgba(255,255,255,0.8);margin-bottom:0.5rem;">
+                            ${new Date(comment.date).toLocaleString('pt-BR')}
+                        </div>
+                        <div style="line-height:1.5;color:rgba(255,255,255,0.95);">${comment.text}</div>
+                        <button onclick="deleteComment(${index})" style="background:rgba(255,68,68,0.9);color:white;border:none;padding:0.4rem 1rem;border-radius:20px;cursor:pointer;font-size:0.85rem;font-weight:bold;margin-top:1rem;transition:background 0.3s;" onmouseover="this.style.background='rgba(220,51,51,0.9)'">
+                            <i class="fas fa-trash"></i> Deletar
+                        </button>
+                    </div>
+                `;
+                commentsList.appendChild(commentDiv);
+            });
+        }
+
+        commentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const name = document.getElementById('commentName').value;
+            const rating = parseInt(document.getElementById('commentRating').value);
+            const text = document.getElementById('commentText').value;
+            const imageFile = document.getElementById('commentImage').files[0];
+
+            const comments = JSON.parse(localStorage.getItem('academiaComments')) || [];
+            
+            const newComment = {
+                name: name,
+                rating: rating,
+                text: text,
+                date: new Date().toISOString(),
+                image: imagePreview.style.display === 'block' ? imagePreview.src : null
+            };
+            
+            comments.unshift(newComment);
+            localStorage.setItem('academiaComments', JSON.stringify(comments));
+            
+            commentForm.reset();
+            imagePreview.style.display = 'none';
+            
+            displayComments(comments);
+            commentsList.scrollTop = 0;
+            
+            const btn = commentForm.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Publicado!';
+            btn.style.background = '#28a745';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 2000);
+        });
+
+        window.deleteComment = function(index) {
+            if (confirm('Tem certeza que deseja deletar seu comentário?')) {
+                const comments = JSON.parse(localStorage.getItem('academiaComments')) || [];
+                comments.splice(index, 1);
+                localStorage.setItem('academiaComments', JSON.stringify(comments));
+                displayComments(comments);
+            }
+        };
+
+        loadComments();
+    </script>
+    <footer id="contact">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <p>Av. Principal, 123 - Centro<br>Tel: (11) 99999-9999<br>WhatsApp: (11) 98888-8888</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+            <p>&copy; 2024 Gaviões Academia. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
