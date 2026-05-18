@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento | GymFit - Excelência em Treinamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF3E00;
+            --primary-dark: #CC3200;
+            --bg-dark: #0A0A0B;
+            --bg-card: #161618;
+            --text-main: #FFFFFF;
+            --text-muted: #A1A1AA;
+            --border: #27272a;
+            --success: #34d399;
+            --container-max: 1200px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 100%; scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6; overflow-x: hidden;
+        }
+
+        .skip-link {
+            position: absolute; top: -100px; left: 0;
+            background: var(--primary); color: white;
+            padding: 1rem; z-index: 999; text-decoration: none;
+            transition: top 0.3s;
+        }
+        .skip-link:focus { top: 0; }
+        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 3px solid var(--primary); outline-offset: 3px;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: rgba(10, 10, 11, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem 0; position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-container {
+            width: 90%; max-width: var(--container-max);
+            margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-family: 'Oswald', sans-serif; font-size: 1.75rem;
+            font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--text-main); text-decoration: none;
+        }
+        .logo span { color: var(--primary); }
+        .nav-menu { display: none; }
+        .nav-list { list-style: none; display: flex; gap: 2rem; }
+        .nav-link {
+            text-decoration: none; color: var(--text-muted);
+            font-weight: 500; transition: var(--transition);
+        }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        @media (min-width: 1024px) { .nav-menu { display: block; } }
+
+        /* HERO SIMPLES */
+        .hero {
+            padding: 3.5rem 5% 2.5rem; text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,62,0,0.08) 0%, transparent 70%);
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-transform: uppercase; margin-bottom: 0.75rem; line-height: 1.1;
+        }
+        .hero h1 span { color: var(--primary); }
+        .hero p { color: var(--text-muted); font-size: 1rem; }
+
+        /* STEPS */
+        .steps-bar {
+            width: 90%; max-width: 600px;
+            margin: 2rem auto; display: flex;
+            align-items: center; gap: 0;
+        }
+        .step {
+            display: flex; flex-direction: column; align-items: center;
+            flex: 1; gap: 0.4rem;
+        }
+        .step-circle {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
+            transition: var(--transition); background: var(--bg-dark);
+        }
+        .step.ativo .step-circle {
+            border-color: var(--primary); color: var(--primary);
+        }
+        .step.completo .step-circle {
+            border-color: var(--success); background: var(--success); color: #000;
+        }
+        .step-label {
+            font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--text-muted);
+            text-align: center;
+        }
+        .step.ativo .step-label, .step.completo .step-label { color: var(--text-main); }
+        .step-line {
+            flex: 1; height: 2px; background: var(--border);
+            max-width: 80px; align-self: flex-start; margin-top: 18px;
+        }
+        .step-line.ativo { background: var(--primary); }
+
+        /* MAIN LAYOUT */
+        .checkout-layout {
+            width: 90%; max-width: var(--container-max);
+            margin: 0 auto 5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 900px) {
+            .checkout-layout {
+                grid-template-columns: 1fr 380px;
+                align-items: start;
+            }
+        }
+
+        /* PAINEL ESQUERDO */
+        .checkout-main { display: flex; flex-direction: column; gap: 2rem; }
+
+        /* SELEÇÃO DE PLANO */
+        .planos-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        @media (max-width: 640px) {
+            .planos-selector { grid-template-columns: 1fr; }
+        }
+
+        .plano-radio { display: none; }
+        .plano-label {
+            display: flex; flex-direction: column;
+            border: 2px solid var(--border);
+            border-radius: 10px; padding: 1.25rem 1rem;
+            cursor: pointer; transition: var(--transition);
+            background: var(--bg-card);
+            position: relative; gap: 0.5rem;
+        }
+        .plano-label:hover { border-color: #555; }
+        .plano-radio:checked + .plano-label {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+        .plano-badge {
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: white;
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            padding: 0.2rem 0.6rem; border-radius: 99px; white-space: nowrap;
+        }
+        .plano-nome {
+            font-family: 'Oswald', sans-serif; font-size: 1.1rem;
+            font-weight: 700; text-transform: uppercase;
+        }
+        .plano-preco { font-size: 1.5rem; font-weight: 700; }
+        .plano-preco span { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); }
+        .plano-features { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.5rem; }
+        .plano-features li {
+            font-size: 0.78rem; color: var(--text-muted);
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .plano-features li::before {
+            content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0;
+        }
+
+        /* CARDS DE SEÇÃO */
+        .secao-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1.75rem;
+        }
+        .secao-title {
+            font-family: 'Oswald', sans-serif; font-size: 1.1rem;
+            font-weight: 700; text-transform: uppercase;
+            margin-bottom: 1.5rem; display: flex;
+            align-items: center; gap: 0.6rem;
+        }
+        .secao-title svg { color: var(--primary); }
+
+        /* FORMULÁRIO */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 500px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+        .form-group {
+            display: flex; flex-direction: column; gap: 0.4rem;
+        }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-label {
+            font-size: 0.8rem; font-weight: 600;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .form-input, .form-select {
+            background: #0f0f10; border: 1px solid var(--border);
+            color: var(--text-main); border-radius: 6px;
+            padding: 0.75rem 1rem; font-family: 'Inter', sans-serif;
+            font-size: 0.9rem; transition: var(--transition);
+            width: 100%;
+        }
+        .form-input:focus, .form-select:focus {
+            border-color: var(--primary); outline: none;
+            box-shadow: 0 0 0 3px rgba(255,62,0,0.12);
+        }
+        .form-input::placeholder { color: #555; }
+        .form-select option { background: #1a1a1d; }
+
+        /* MÉTODO DE PAGAMENTO */
+        .metodos-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .metodo-radio { display: none; }
+        .metodo-label {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 0.4rem;
+            border: 2px solid var(--border); border-radius: 8px;
+            padding: 0.85rem 0.5rem; cursor: pointer;
+            transition: var(--transition); background: #0f0f10;
+        }
+        .metodo-label:hover { border-color: #555; }
+        .metodo-radio:checked + .metodo-label {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+        .metodo-icon { font-size: 1.5rem; }
+        .metodo-nome {
+            font-size: 0.72rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);
+        }
+
+        /* PIX PANEL */
+        .pix-panel {
+            display: none; text-align: center; padding: 1.5rem;
+            border: 1px dashed var(--border); border-radius: 8px;
+        }
+        .pix-panel.visivel { display: block; }
+        .pix-qr {
+            width: 140px; height: 140px; background: white;
+            margin: 0 auto 1rem; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 8px;
+        }
+        .pix-qr svg { width: 100%; height: 100%; }
+        .pix-chave {
+            font-size: 0.8rem; color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .pix-copiar {
+            background: rgba(255,62,0,0.1); border: 1px solid var(--primary);
+            color: var(--primary); border-radius: 6px; padding: 0.5rem 1.2rem;
+            cursor: pointer; font-family: 'Inter', sans-serif;
+            font-size: 0.85rem; font-weight: 700; transition: var(--transition);
+        }
+        .pix-copiar:hover { background: var(--primary); color: white; }
+
+        /* CARTÃO */
+        .cartao-panel { display: none; }
+        .cartao-panel.visivel { display: block; }
+
+        /* BOLETO */
+        .boleto-panel {
+            display: none; padding: 1.25rem;
+            border: 1px dashed var(--border); border-radius: 8px;
+            text-align: center;
+        }
+        .boleto-panel.visivel { display: block; }
+        .boleto-panel p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+
+        /* TERMOS */
+        .termos-wrap {
+            display: flex; align-items: flex-start; gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .termos-check {
+            width: 18px; height: 18px; min-width: 18px;
+            border: 2px solid var(--border); border-radius: 4px;
+            background: #0f0f10; cursor: pointer;
+            accent-color: var(--primary); margin-top: 2px;
+        }
+        .termos-texto {
+            font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;
+        }
+        .termos-texto a { color: var(--primary); text-decoration: none; }
+        .termos-texto a:hover { text-decoration: underline; }
+
+        /* BTN FINALIZAR */
+        .btn-finalizar {
+            width: 100%; padding: 1rem;
+            background: var(--primary); border: none;
+            color: white; border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; transition: var(--transition);
+            margin-top: 1.25rem; display: flex;
+            align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .btn-finalizar:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-finalizar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* PAINEL LATERAL: RESUMO */
+        .resumo-sticky { position: sticky; top: 90px; }
+
+        .resumo-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1.75rem;
+        }
+        .resumo-title {
+            font-family: 'Oswald', sans-serif; font-size: 1.1rem;
+            font-weight: 700; text-transform: uppercase;
+            margin-bottom: 1.5rem; padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .resumo-plano-nome {
+            font-family: 'Oswald', sans-serif; font-size: 1.3rem;
+            font-weight: 700; margin-bottom: 0.25rem;
+        }
+        .resumo-plano-tag {
+            font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.25rem;
+        }
+
+        .resumo-linha {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 0.6rem 0;
+            font-size: 0.9rem; color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        .resumo-linha strong { color: var(--text-main); }
+        .resumo-total {
+            display: flex; justify-content: space-between;
+            align-items: center; padding-top: 1.25rem;
+            margin-top: 0.5rem;
+        }
+        .resumo-total-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem; text-transform: uppercase; font-weight: 700;
+        }
+        .resumo-total-valor {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.75rem; font-weight: 700; color: var(--primary);
+        }
+        .resumo-total-valor small {
+            font-size: 0.9rem; font-weight: 400; color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cupom-wrap {
+            display: flex; gap: 0.5rem; margin-top: 1.25rem;
+        }
+        .cupom-input {
+            flex: 1; background: #0f0f10;
+            border: 1px solid var(--border); color: var(--text-main);
+            border-radius: 6px; padding: 0.65rem 0.9rem;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .cupom-input:focus { border-color: var(--primary); outline: none; }
+        .cupom-input::placeholder { text-transform: none; letter-spacing: 0; color: #555; }
+        .cupom-btn {
+            padding: 0.65rem 1rem; background: transparent;
+            border: 1px solid var(--border); color: var(--text-muted);
+            border-radius: 6px; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600;
+            transition: var(--transition); white-space: nowrap;
+        }
+        .cupom-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        .desconto-linha {
+            display: none; justify-content: space-between;
+            align-items: center; padding: 0.5rem 0;
+            font-size: 0.85rem; color: var(--success);
+        }
+
+        .garantia-box {
+            margin-top: 1.5rem; padding: 1rem;
+            background: rgba(52,211,153,0.05); border: 1px solid rgba(52,211,153,0.2);
+            border-radius: 8px; display: flex; gap: 0.75rem; align-items: flex-start;
+        }
+        .garantia-icon { font-size: 1.25rem; flex-shrink: 0; }
+        .garantia-texto { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+        .garantia-texto strong { color: var(--text-main); display: block; margin-bottom: 0.2rem; }
+
+        .seguranca-badges {
+            display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem;
+            justify-content: center;
+        }
+        .badge-seg {
+            display: flex; align-items: center; gap: 0.35rem;
+            font-size: 0.7rem; color: var(--text-muted);
+            border: 1px solid var(--border); border-radius: 6px;
+            padding: 0.35rem 0.6rem;
+        }
+
+        /* MODAL DE SUCESSO */
+        .overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            z-index: 200; display: none;
+            align-items: center; justify-content: center; padding: 1.5rem;
+        }
+        .overlay.visivel { display: flex; }
+        .modal-sucesso {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 3rem 2rem;
+            max-width: 440px; width: 100%; text-align: center;
+            animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes scaleIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .sucesso-icon {
+            width: 72px; height: 72px; background: rgba(52,211,153,0.1);
+            border: 2px solid var(--success); border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+        }
+        .sucesso-titulo {
+            font-family: 'Oswald', sans-serif; font-size: 1.75rem;
+            font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem;
+        }
+        .sucesso-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7; }
+        .btn-voltar {
+            display: inline-block; padding: 0.85rem 2rem;
+            background: var(--primary); border-radius: 8px;
+            color: white; text-decoration: none;
+            font-family: 'Oswald', sans-serif; font-size: 1rem;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            transition: var(--transition);
+        }
+        .btn-voltar:hover { background: var(--primary-dark); }
+
+        /* ANIMAÇÕES */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .anima { animation: fadeInUp 0.6s forwards; }
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+        /* FOOTER */
+        .footer {
+            background: #000; padding: 3rem 0;
+            text-align: center; border-top: 1px solid var(--border);
+        }
+        .footer p { color: var(--text-muted); font-size: 0.875rem; }
+    </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+<header class="header">
+    <nav class="nav-container" aria-label="Navegação Principal">
+        <a href="index.html" class="logo" aria-label="GymFit Home">Gym<span>Fit</span></a>
+        <div class="nav-menu">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Início</a></li>
+                <li><a href="sobre.html" class="nav-link">Sobre</a></li>
+                <li><a href="horarios.html" class="nav-link">Horários</a></li>
+                <li><a href="planos.html" class="nav-link active" aria-current="page">Planos</a></li>
+                <li><a href="pagamento.html" class="nav-link">pagamento</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main id="main-content">
+
+    <section class="hero">
+        <h1>Assine seu <span>Plano</span></h1>
+        <p>Sem taxas de matrícula. Cancele quando quiser.</p>
+    </section>
+
+    <!-- Steps -->
+    <div class="steps-bar" aria-label="Etapas do checkout">
+        <div class="step completo" id="step1">
+            <div class="step-circle">✓</div>
+            <span class="step-label">Plano</span>
+        </div>
+        <div class="step-line ativo"></div>
+        <div class="step ativo" id="step2">
+            <div class="step-circle">2</div>
+            <span class="step-label">Dados</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step3">
+            <div class="step-circle">3</div>
+            <span class="step-label">Pagamento</span>
+        </div>
+    </div>
+
+    <!-- LAYOUT CHECKOUT -->
+    <div class="checkout-layout">
+
+        <!-- ESQUERDA -->
+        <div class="checkout-main">
+
+            <!-- 1. Seleção de Plano -->
+            <section class="secao-card anima delay-1" aria-labelledby="titulo-planos">
+                <h2 class="secao-title" id="titulo-planos">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Escolha seu plano
+                </h2>
+
+                <div class="planos-selector" role="radiogroup" aria-label="Selecionar plano">
+                    <div>
+                        <input type="radio" name="plano" id="plano-basico" value="basico" class="plano-radio">
+                        <label for="plano-basico" class="plano-label">
+                            <span class="plano-nome">Básico</span>
+                            <span class="plano-preco">R$ 89<span>/mês</span></span>
+                            <ul class="plano-features">
+                                <li>Musculação livre</li>
+                                <li>Horário 10h–15h</li>
+                                <li>Vestiário simples</li>
+                            </ul>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" name="plano" id="plano-pro" value="pro" class="plano-radio" checked>
+                        <label for="plano-pro" class="plano-label">
+                            <span class="plano-badge">Mais popular</span>
+                            <span class="plano-nome">Pro</span>
+                            <span class="plano-preco">R$ 129<span>/mês</span></span>
+                            <ul class="plano-features">
+                                <li>Acesso 24h</li>
+                                <li>Todas as aulas</li>
+                                <li>Acomp. mensal</li>
+                            </ul>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" name="plano" id="plano-premium" value="premium" class="plano-radio">
+                        <label for="plano-premium" class="plano-label">
+                            <span class="plano-nome">Premium</span>
+                            <span class="plano-preco">R$ 199<span>/mês</span></span>
+                            <ul class="plano-features">
+                                <li>Tudo do Pro</li>
+                                <li>+1 convidado</li>
+                            </ul>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Dados Pessoais -->
+            <section class="secao-card anima delay-2" aria-labelledby="titulo-dados">
+                <h2 class="secao-title" id="titulo-dados">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Dados pessoais
+                </h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="nome">Nome</label>
+                        <input type="text" id="nome" class="form-input" placeholder="Seu nome" autocomplete="given-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="sobrenome">Sobrenome</label>
+                        <input type="text" id="sobrenome" class="form-input" placeholder="Seu sobrenome" autocomplete="family-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">E-mail</label>
+                        <input type="email" id="email" class="form-input" placeholder="seu@email.com" autocomplete="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="telefone">Telefone</label>
+                        <input type="tel" id="telefone" class="form-input" placeholder="(47) 99999-9999" autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cpf">CPF</label>
+                        <input type="text" id="cpf" class="form-input" placeholder="000.000.000-00" maxlength="14" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="nascimento">Data de nascimento</label>
+                        <input type="date" id="nascimento" class="form-input" autocomplete="bday">
+                    </div>
+                    <div class="form-group full">
+                        <label class="form-label" for="objetivo">Objetivo principal</label>
+                        <select id="objetivo" class="form-select">
+                            <option value="">Selecione um objetivo</option>
+                            <option value="emagrecimento">Emagrecimento</option>
+                            <option value="hipertrofia">Hipertrofia / Ganho de massa</option>
+                            <option value="condicionamento">Condicionamento físico</option>
+                            <option value="saude">Saúde e bem-estar</option>
+                            <option value="performance">Alta performance</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Pagamento -->
+            <section class="secao-card anima delay-3" aria-labelledby="titulo-pagamento">
+                <h2 class="secao-title" id="titulo-pagamento">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    Forma de pagamento
+                </h2>
+
+                <!-- Seleção de método -->
+                <div class="metodos-grid" role="radiogroup" aria-label="Método de pagamento">
+                    <div>
+                        <input type="radio" name="metodo" id="metodo-cartao" value="cartao" class="metodo-radio" checked>
+                        <label for="metodo-cartao" class="metodo-label">
+                            <span class="metodo-icon">💳</span>
+                            <span class="metodo-nome">Cartão</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" name="metodo" id="metodo-pix" value="pix" class="metodo-radio">
+                        <label for="metodo-pix" class="metodo-label">
+                            <span class="metodo-icon">⚡</span>
+                            <span class="metodo-nome">PIX</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" name="metodo" id="metodo-boleto" value="boleto" class="metodo-radio">
+                        <label for="metodo-boleto" class="metodo-label">
+                            <span class="metodo-icon">🧾</span>
+                            <span class="metodo-nome">Boleto</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Painel: Cartão -->
+                <div class="cartao-panel visivel" id="painel-cartao">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label class="form-label" for="titular">Nome no cartão</label>
+                            <input type="text" id="titular" class="form-input" placeholder="Como está no cartão" autocomplete="cc-name">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label" for="numero-cartao">Número do cartão</label>
+                            <input type="text" id="numero-cartao" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" autocomplete="cc-number">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="validade">Validade</label>
+                            <input type="text" id="validade" class="form-input" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="cvv">CVV</label>
+                            <input type="text" id="cvv" class="form-input" placeholder="000" maxlength="4" inputmode="numeric" autocomplete="cc-csc">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label" for="parcelas">Parcelamento</label>
+                            <select id="parcelas" class="form-select">
+                                <option value="1">1x sem juros</option>
+                                <option value="2">2x sem juros</option>
+                                <option value="3">3x sem juros</option>
+                                <option value="6">6x + 1,99% a.m.</option>
+                                <option value="12">12x + 1,99% a.m.</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Painel: PIX -->
+                <div class="pix-panel" id="painel-pix">
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.25rem;">Escaneie o QR Code ou copie a chave PIX para pagar:</p>
+                    <div class="pix-qr" aria-label="QR Code PIX">
+                        <!-- QR Code decorativo SVG -->
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="200" height="200" fill="white"/>
+                          <!-- Finder patterns -->
+                          <rect x="10" y="10" width="60" height="60" fill="black"/><rect x="20" y="20" width="40" height="40" fill="white"/><rect x="30" y="30" width="20" height="20" fill="black"/>
+                          <rect x="130" y="10" width="60" height="60" fill="black"/><rect x="140" y="20" width="40" height="40" fill="white"/><rect x="150" y="30" width="20" height="20" fill="black"/>
+                          <rect x="10" y="130" width="60" height="60" fill="black"/><rect x="20" y="140" width="40" height="40" fill="white"/><rect x="30" y="150" width="20" height="20" fill="black"/>
+                          <!-- Dados simulados -->
+                          <rect x="80" y="10" width="10" height="10" fill="black"/>
+                          <rect x="100" y="10" width="10" height="10" fill="black"/>
+                          <rect x="80" y="30" width="10" height="10" fill="black"/>
+                          <rect x="100" y="30" width="10" height="10" fill="black"/>
+                          <rect x="90" y="50" width="10" height="10" fill="black"/>
+                          <rect x="80" y="80" width="10" height="10" fill="black"/>
+                          <rect x="100" y="80" width="10" height="10" fill="black"/>
+                          <rect x="80" y="100" width="10" height="10" fill="black"/>
+                          <rect x="90" y="110" width="10" height="10" fill="black"/>
+                          <rect x="110" y="80" width="10" height="10" fill="black"/>
+                          <rect x="130" y="90" width="10" height="10" fill="black"/>
+                          <rect x="150" y="80" width="10" height="10" fill="black"/>
+                          <rect x="140" y="100" width="10" height="10" fill="black"/>
+                          <rect x="160" y="100" width="10" height="10" fill="black"/>
+                          <rect x="130" y="120" width="10" height="10" fill="black"/>
+                          <rect x="150" y="130" width="10" height="10" fill="black"/>
+                          <rect x="160" y="150" width="10" height="10" fill="black"/>
+                          <rect x="130" y="160" width="10" height="10" fill="black"/>
+                          <rect x="80" y="130" width="10" height="10" fill="black"/>
+                          <rect x="100" y="140" width="10" height="10" fill="black"/>
+                          <rect x="80" y="160" width="10" height="10" fill="black"/>
+                          <rect x="100" y="170" width="10" height="10" fill="black"/>
+                          <rect x="110" y="150" width="10" height="10" fill="black"/>
+                        </svg>
+                    </div>
+                    <p class="pix-chave">Chave PIX: <strong>pagamentos@gymfit.com.br</strong></p>
+                    <button class="pix-copiar" id="btn-copiar-pix" type="button">📋 Copiar chave PIX</button>
+                    <p style="color:var(--text-muted);font-size:0.75rem;margin-top:1rem;">
+                        ⚡ O pagamento é confirmado em até <strong>5 minutos</strong>
+                    </p>
+                </div>
+
+                <!-- Painel: Boleto -->
+                <div class="boleto-panel" id="painel-boleto">
+                    <p>Após finalizar, você receberá o boleto por e-mail. O vencimento é de <strong>3 dias úteis</strong>. Sua matrícula é ativada após a confirmação do pagamento.</p>
+                    <p style="font-size:0.8rem;color:var(--text-muted);">⚠️ Boleto não disponível para planos mensais recorrentes.</p>
+                </div>
+
+                <!-- Termos -->
+                <div class="termos-wrap">
+                    <input type="checkbox" id="termos" class="termos-check" required>
+                    <label for="termos" class="termos-texto">
+                        Li e concordo com os <a href="#">Termos de Uso</a> e a
+                        <a href="#">Política de Privacidade</a> da GymFit. Estou ciente de que posso
+                        cancelar minha assinatura a qualquer momento.
+                    </label>
+                </div>
+
+                <button class="btn-finalizar" id="btn-finalizar" type="button" disabled>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Finalizar assinatura
+                </button>
+            </section>
+
+        </div>
+
+        <!-- DIREITA: RESUMO -->
+        <aside class="resumo-sticky" aria-label="Resumo do pedido">
+            <div class="resumo-card">
+                <h2 class="resumo-title">Resumo do pedido</h2>
+
+                <div class="resumo-plano-nome" id="resumo-plano-nome">Plano Pro</div>
+                <div class="resumo-plano-tag">Assinatura mensal · Sem fidelidade</div>
+
+                <div class="resumo-linha">
+                    <span>Mensalidade</span>
+                    <strong id="resumo-mensalidade">R$ 129,00</strong>
+                </div>
+                <div class="resumo-linha">
+                    <span>Taxa de matrícula</span>
+                    <strong style="color:var(--success)">Grátis</strong>
+                </div>
+                <div class="resumo-linha" id="linha-desconto" style="display:none; color:var(--success);">
+                    <span>Desconto (cupom)</span>
+                    <strong id="valor-desconto" style="color:var(--success)">-R$ 0,00</strong>
+                </div>
+
+                <div class="resumo-total">
+                    <span class="resumo-total-label">Total hoje</span>
+                    <span class="resumo-total-valor" id="resumo-total">R$ 129<small>/mês</small></span>
+                </div>
+
+                <!-- Cupom -->
+                <div class="cupom-wrap">
+                    <input type="text" class="cupom-input" id="cupom-input" placeholder="Código de desconto" aria-label="Código de cupom de desconto">
+                    <button class="cupom-btn" id="btn-cupom" type="button">Aplicar</button>
+                </div>
+                <p id="cupom-msg" style="font-size:0.75rem;margin-top:0.4rem;display:none;"></p>
+
+                <!-- Garantia -->
+                <div class="garantia-box">
+                    <span class="garantia-icon">🛡️</span>
+                    <div class="garantia-texto">
+                        <strong>Garantia de 7 dias</strong>
+                        Se não gostar, devolvemos 100% do valor pago. Sem perguntas.
+                    </div>
+                </div>
+
+                <!-- Selos -->
+                <div class="seguranca-badges">
+                    <span class="badge-seg">🔒 SSL</span>
+                    <span class="badge-seg">✓ PCI DSS</span>
+                    <span class="badge-seg">🏦 Pagamento seguro</span>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+<!-- MODAL DE SUCESSO -->
+<div class="overlay" id="overlay-sucesso" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal-sucesso">
+        <div class="sucesso-icon" aria-hidden="true">✓</div>
+        <h2 class="sucesso-titulo" id="modal-titulo">Parabéns!</h2>
+        <p class="sucesso-desc">
+            Sua assinatura do <strong id="modal-plano">Plano Pro</strong> foi confirmada com sucesso! 🎉<br><br>
+            Você receberá um e-mail de boas-vindas com todos os detalhes do seu acesso.
+        </p>
+        <a href="index.html" class="btn-voltar">Ir para o início</a>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="nav-container">
+        <p>&copy; 2026 GymFit Academy. Desenvolvido com foco em acessibilidade e performance web.</p>
+    </div>
+</footer>
+
+<script>
+// ===================================================
+// DADOS DOS PLANOS
+// ===================================================
+const planos = {
+    basico:  { nome: 'Plano Básico',  preco: 89,  precoFmt: 'R$ 89',  tag: 'R$ 89,00' },
+    pro:     { nome: 'Plano Pro',     preco: 129, precoFmt: 'R$ 129', tag: 'R$ 129,00' },
+    premium: { nome: 'Plano Premium', preco: 199, precoFmt: 'R$ 199', tag: 'R$ 199,00' },
+};
+
+const cuponsValidos = {
+    'GYMFIT10': 0.10,
+    'PRIMEIRAULA': 0.15,
+    'BEM-VINDO': 0.20,
+};
+
+let planoSelecionado = 'pro';
+let descontoAplicado = 0;
+
+// ===================================================
+// ATUALIZA RESUMO
+// ===================================================
+function atualizarResumo() {
+    const p = planos[planoSelecionado];
+    const precoFinal = Math.round(p.preco * (1 - descontoAplicado));
+
+    document.getElementById('resumo-plano-nome').textContent = p.nome;
+    document.getElementById('resumo-mensalidade').textContent = p.tag;
+
+    if (descontoAplicado > 0) {
+        const economia = Math.round(p.preco * descontoAplicado);
+        document.getElementById('linha-desconto').style.display = 'flex';
+        document.getElementById('valor-desconto').textContent = `-R$ ${economia},00`;
+        document.getElementById('resumo-total').innerHTML = `R$ ${precoFinal}<small>/mês</small>`;
+    } else {
+        document.getElementById('linha-desconto').style.display = 'none';
+        document.getElementById('resumo-total').innerHTML = `R$ ${p.preco}<small>/mês</small>`;
+    }
+
+    document.getElementById('modal-plano').textContent = p.nome;
+}
+
+// ===================================================
+// SELEÇÃO DE PLANO
+// ===================================================
+document.querySelectorAll('.plano-radio').forEach(radio => {
+    radio.addEventListener('change', () => {
+        planoSelecionado = radio.value;
+        descontoAplicado = 0;
+        document.getElementById('cupom-input').value = '';
+        document.getElementById('cupom-msg').style.display = 'none';
+        atualizarResumo();
+    });
+});
+
+// ===================================================
+// MÉTODOS DE PAGAMENTO
+// ===================================================
+document.querySelectorAll('input[name="metodo"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        document.getElementById('painel-cartao').classList.remove('visivel');
+        document.getElementById('painel-pix').classList.remove('visivel');
+        document.getElementById('painel-boleto').classList.remove('visivel');
+        document.getElementById(`painel-${radio.value}`).classList.add('visivel');
+    });
+});
+
+// ===================================================
+// MÁSCARA CPF
+// ===================================================
+document.getElementById('cpf').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+    v = v.replace(/(\d{3})(\d)/, '$1.$2');
+    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    this.value = v;
+});
+
+// ===================================================
+// MÁSCARA CARTÃO
+// ===================================================
+document.getElementById('numero-cartao').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+    this.value = v;
+});
+
+document.getElementById('validade').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    if (v.length >= 2) v = v.slice(0,2) + '/' + v.slice(2,4);
+    this.value = v;
+});
+
+// ===================================================
+// CUPOM DE DESCONTO
+// ===================================================
+document.getElementById('btn-cupom').addEventListener('click', () => {
+    const codigo = document.getElementById('cupom-input').value.trim().toUpperCase();
+    const msg = document.getElementById('cupom-msg');
+    msg.style.display = 'block';
+
+    if (cuponsValidos[codigo]) {
+        descontoAplicado = cuponsValidos[codigo];
+        const pct = Math.round(descontoAplicado * 100);
+        msg.textContent = `✓ Cupom "${codigo}" aplicado! ${pct}% de desconto.`;
+        msg.style.color = 'var(--success)';
+        atualizarResumo();
+    } else {
+        msg.textContent = '✗ Cupom inválido ou expirado.';
+        msg.style.color = '#f87171';
+    }
+});
+
+document.getElementById('cupom-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btn-cupom').click();
+});
+
+// ===================================================
+// PIX: Copiar chave
+// ===================================================
+document.getElementById('btn-copiar-pix').addEventListener('click', function() {
+    navigator.clipboard.writeText('pagamentos@gymfit.com.br').catch(() => {});
+    this.textContent = '✓ Chave copiada!';
+    this.style.background = 'rgba(52,211,153,0.1)';
+    this.style.borderColor = 'var(--success)';
+    this.style.color = 'var(--success)';
+    setTimeout(() => {
+        this.textContent = '📋 Copiar chave PIX';
+        this.style.background = '';
+        this.style.borderColor = '';
+        this.style.color = '';
+    }, 2500);
+});
+
+// ===================================================
+// HABILITAR BTN FINALIZAR (quando aceitar termos)
+// ===================================================
+document.getElementById('termos').addEventListener('change', function() {
+    document.getElementById('btn-finalizar').disabled = !this.checked;
+});
+
+// ===================================================
+// FINALIZAR COMPRA
+// ===================================================
+document.getElementById('btn-finalizar').addEventListener('click', () => {
+    // Validação básica
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!nome || !email) {
+        alert('Por favor, preencha pelo menos seu nome e e-mail.');
+        return;
+    }
+
+    // Atualiza steps
+    document.getElementById('step2').classList.remove('ativo');
+    document.getElementById('step2').classList.add('completo');
+    document.getElementById('step2').querySelector('.step-circle').textContent = '✓';
+    document.getElementById('step3').classList.add('completo');
+    document.getElementById('step3').querySelector('.step-circle').textContent = '✓';
+    document.querySelectorAll('.step-line').forEach(l => l.classList.add('ativo'));
+
+    // Mostra modal de sucesso
+    document.getElementById('overlay-sucesso').classList.add('visivel');
+    document.body.style.overflow = 'hidden';
+});
+
+// Fechar modal com ESC
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.getElementById('overlay-sucesso').classList.remove('visivel');
+        document.body.style.overflow = '';
+    }
+});
+
+// Inicializa
+atualizarResumo();
+</script>
+</body>
+</html>
